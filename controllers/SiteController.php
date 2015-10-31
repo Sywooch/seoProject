@@ -4,12 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
+use app\controllers\MyControler;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\SignupForm;
-class SiteController extends Controller
+class SiteController extends MyControler
 {
     public function behaviors()
     {
@@ -62,6 +62,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+        $this->addGoalForForm('login-form', 'login');
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -70,7 +71,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
@@ -82,6 +82,7 @@ class SiteController extends Controller
 
             return $this->refresh();
         }
+        $this->addGoalForForm('contact-form', 'feedback');
         return $this->render('contact', [
             'model' => $model,
         ]);
@@ -102,7 +103,7 @@ class SiteController extends Controller
                 }
             }
         }
-
+        $this->addGoalForForm('form-signup', 'registration');
         return $this->render('signup', [
             'model' => $model,
         ]);

@@ -12,7 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin([
         'method' => 'post',
-        'action' => ['/admin/subscribe/create'],]
+        'action' => ['/admin/subscribe/create'],
+        'id' => 'subscribe-form',
+        ]
+        
     ); ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>

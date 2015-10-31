@@ -1,5 +1,5 @@
 <?php
-
+/* @var $this \yii\web\View */
 use \app\models\Subscribe;
 use \app\assets\SubscribeAsset;
 
