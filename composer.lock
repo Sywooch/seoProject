@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf9921eabfdfc47d388c3f7960ac0315",
-    "content-hash": "71718a1b9d2f94c88291eab24127a9b8",
+    "hash": "5e073cc77fb30a101d075535d36efc03",
+    "content-hash": "5eafcd1690ead718fae5ed9b28e72d6f",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -55,6 +55,78 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/codemirror",
+            "version": "5.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codemirror/CodeMirror.git",
+                "reference": "300e65942c0f93f37f80cab26f6b79bc0ad7001b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codemirror/CodeMirror/zipball/300e65942c0f93f37f80cab26f6b79bc0ad7001b",
+                "reference": "300e65942c0f93f37f80cab26f6b79bc0ad7001b",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "lib/codemirror.js",
+                    "lib/codemirror.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "components",
+                    "bin",
+                    "demo",
+                    "doc",
+                    "test",
+                    "index.html",
+                    "package.json",
+                    "mode/*/*test.js",
+                    "mode/*/*.html"
+                ]
+            }
+        },
+        {
+            "name": "bower-asset/font-awesome",
+            "version": "v4.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "e554555d73a44e0a7d11b0361ad7a5325a5f551c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/e554555d73a44e0a7d11b0361ad7a5325a5f551c",
+                "reference": "e554555d73a44e0a7d11b0361ad7a5325a5f551c",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "less/font-awesome.less",
+                    "scss/font-awesome.scss"
+                ],
+                "bower-asset-ignore": [
+                    "*/.*",
+                    "*.json",
+                    "src",
+                    "*.yml",
+                    "Gemfile",
+                    "Gemfile.lock",
+                    "*.md"
+                ]
+            },
+            "license": [
+                "OFL-1.1",
+                "MIT",
+                "CC-BY-3.0"
+            ],
+            "description": "Font Awesome"
         },
         {
             "name": "bower-asset/jquery",
@@ -189,6 +261,43 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/summernote",
+            "version": "v0.6.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/summernote/summernote.git",
+                "reference": "4a988eebc69b783f649e16e44511bea5afa73df8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/summernote/summernote/zipball/4a988eebc69b783f649e16e44511bea5afa73df8",
+                "reference": "4a988eebc69b783f649e16e44511bea5afa73df8",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap": ">=3.0.1",
+                "bower-asset/font-awesome": ">=4.2.0",
+                "bower-asset/jquery": ">=1.9.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./dist/summernote.js",
+                    "./dist/summernote.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -331,6 +440,69 @@
             "time": "2013-11-30 08:25:19"
         },
         {
+            "name": "giggsey/libphonenumber-for-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "8e2e8f97645b99cbb570494e4aa2aa7b321ee34b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/8e2e8f97645b99cbb570494e4aa2aa7b321ee34b",
+                "reference": "8e2e8f97645b99cbb570494e4aa2aa7b321ee34b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "*",
+                "pear/versioncontrol_git": "dev-master",
+                "phing/phing": "~2.7",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/console": "~2.4"
+            },
+            "suggest": {
+                "ext-intl": "To use the geocoder and carrier mapping"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "libphonenumber": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "http://giggsey.com/"
+                }
+            ],
+            "description": "PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+            "keywords": [
+                "geocoding",
+                "geolocation",
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "time": "2015-10-30 09:46:36"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "5.x-dev",
             "source": {
@@ -384,17 +556,68 @@
             "time": "2015-09-04 05:47:20"
         },
         {
+            "name": "udokmeci/yii2-phone-validator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/udokmeci/yii2-phone-validator.git",
+                "reference": "2ff6663b6ee3d760238875d1a83a3efc1dccb33e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/udokmeci/yii2-phone-validator/zipball/2ff6663b6ee3d760238875d1a83a3efc1dccb33e",
+                "reference": "2ff6663b6ee3d760238875d1a83a3efc1dccb33e",
+                "shasum": ""
+            },
+            "require": {
+                "giggsey/libphonenumber-for-php": "~7.0",
+                "php": ">=5.3.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "validator",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "udokmeci\\yii2PhoneValidator": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Uğur DÖKMECİ",
+                    "email": "ugurdokmeci@gmail.com",
+                    "homepage": "https://github.com/udokmeci/yii2-phone-validator",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 Phone validator wrapper on top of PhoneNumberUtil library also used by Android devices",
+            "homepage": "https://github.com/udokmeci/yii2-beanstalk",
+            "keywords": [
+                "phone number",
+                "phone number validator",
+                "yii2"
+            ],
+            "time": "2015-03-10 08:39:14"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "c0c1af66cf2e6181435164d341c21a683fc6751c"
+                "reference": "912ea8f87061ad530323f0ffb39acfce3e69ba98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f2321a2acfc6bbd79bc78c380050ec71e7153b57",
-                "reference": "c0c1af66cf2e6181435164d341c21a683fc6751c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/912ea8f87061ad530323f0ffb39acfce3e69ba98",
+                "reference": "912ea8f87061ad530323f0ffb39acfce3e69ba98",
                 "shasum": ""
             },
             "require": {
@@ -470,7 +693,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-10-13 10:19:49"
+            "time": "2015-10-30 20:03:25"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -478,12 +701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "5ca562bcc759fbb1d9e3fe679529e44c912aaf05"
+                "reference": "09a5bfe72c0141ad26281848f1ae9c3f42541f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/7c6b244d9cfd58a5a10cad9853edc090ffd479b1",
-                "reference": "5ca562bcc759fbb1d9e3fe679529e44c912aaf05",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/09a5bfe72c0141ad26281848f1ae9c3f42541f20",
+                "reference": "09a5bfe72c0141ad26281848f1ae9c3f42541f20",
                 "shasum": ""
             },
             "require": {
@@ -520,7 +743,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2015-10-08 09:33:22"
+            "time": "2015-10-25 21:18:48"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -618,6 +841,60 @@
                 "yii2"
             ],
             "time": "2015-09-29 11:01:52"
+        },
+        {
+            "name": "zelenin/yii2-summernote-widget",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zelenin/yii2-summernote-widget.git",
+                "reference": "f71a683c42b371bb55b641a4f241fd468b19d444"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zelenin/yii2-summernote-widget/zipball/f71a683c42b371bb55b641a4f241fd468b19d444",
+                "reference": "f71a683c42b371bb55b641a4f241fd468b19d444",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/codemirror": "5.*@stable",
+                "bower-asset/font-awesome": "4.*@stable",
+                "bower-asset/summernote": "0.*@stable",
+                "yiisoft/yii2": "~2"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zelenin\\yii\\widgets\\Summernote\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksandr Zelenin",
+                    "email": "aleksandr@zelenin.me",
+                    "homepage": "http://zelenin.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 Summernote widget. Super simple WYSIWYG editor on Bootstrap",
+            "homepage": "https://github.com/zelenin/yii2-summernote-widget",
+            "keywords": [
+                "summernote",
+                "widget",
+                "wysiwyg",
+                "yii2"
+            ],
+            "time": "2015-03-27 07:55:47"
         }
     ],
     "packages-dev": [
@@ -738,12 +1015,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "9198c2f7668b9ee494959f8ff7f5f6e6f65379ca"
+                "reference": "e0d369d63f3e04ac3cc18e8ccebfc92d9f0d8822"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/f6b2ebd8c462494083bfea6c087f79da36503930",
-                "reference": "9198c2f7668b9ee494959f8ff7f5f6e6f65379ca",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/e0d369d63f3e04ac3cc18e8ccebfc92d9f0d8822",
+                "reference": "e0d369d63f3e04ac3cc18e8ccebfc92d9f0d8822",
                 "shasum": ""
             },
             "require": {
@@ -780,7 +1057,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2015-10-12 15:48:46"
+            "time": "2015-10-30 22:32:56"
         },
         {
             "name": "phpspec/php-diff",
@@ -870,12 +1147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-codeception.git",
-                "reference": "d2c91b5a5dbde172f9adbbde10b0a523d1bfc388"
+                "reference": "22e981b8c93d9882ccd333ba001767a6b99aa9a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/d2c91b5a5dbde172f9adbbde10b0a523d1bfc388",
-                "reference": "d2c91b5a5dbde172f9adbbde10b0a523d1bfc388",
+                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/22e981b8c93d9882ccd333ba001767a6b99aa9a1",
+                "reference": "22e981b8c93d9882ccd333ba001767a6b99aa9a1",
                 "shasum": ""
             },
             "require": {
@@ -907,7 +1184,7 @@
                 "codeception",
                 "yii2"
             ],
-            "time": "2015-09-29 10:36:41"
+            "time": "2015-10-29 09:02:25"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -915,12 +1192,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "a8eba1bb9a7163df5120fb07c0c000e298a8bcf0"
+                "reference": "7ba01f0049f691bd76259e10bdede0709323ffc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/a8eba1bb9a7163df5120fb07c0c000e298a8bcf0",
-                "reference": "a8eba1bb9a7163df5120fb07c0c000e298a8bcf0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/7ba01f0049f691bd76259e10bdede0709323ffc2",
+                "reference": "7ba01f0049f691bd76259e10bdede0709323ffc2",
                 "shasum": ""
             },
             "require": {
@@ -954,7 +1231,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2015-09-29 10:36:38"
+            "time": "2015-10-30 19:44:49"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -1060,6 +1337,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "zelenin/yii2-summernote-widget": 20,
+        "udokmeci/yii2-phone-validator": 20,
         "dkushnikov/yii2-yandex-metrika": 20
     },
     "prefer-stable": false,

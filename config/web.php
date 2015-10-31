@@ -28,6 +28,21 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'urlManager' => array(
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => array(
+                '<module:[\wd-]+>/<controller:[\wd-]+>/<action:[\wd-]+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<action>'=>'site/<action>',
+                '<action>'=>'site/<action>',
+                '' => 'site/index',
+            ),
+        ),
+        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -44,6 +59,9 @@ $config = [
             'class' => 'yii\gii\Module',
             'password' => 'den',
             'ipFilters' => array('127.0.0.1', '::1'),
+        ],
+        'admin' => [
+            'class' => 'app\modules\admin\Module'
         ],
     ],
     'params' => $params,
