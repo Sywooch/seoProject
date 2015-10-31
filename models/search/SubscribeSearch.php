@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Subscribe;
-
+use \app\models\User;
 /**
  * SubscribeSearch represents the model behind the search form about `app\models\Subscribe`.
  */
@@ -18,8 +18,8 @@ class SubscribeSearch extends Subscribe
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['email', 'phone'], 'safe'],
+            [['id'], 'integer'],
+            [['email', 'phone','user_id'], 'safe'],
         ];
     }
 
@@ -57,10 +57,13 @@ class SubscribeSearch extends Subscribe
             return $dataProvider;
         }
 
+        if ($this->user_id !='') {
+            $query->leftJoin(User::tableName() . ' u', Subscribe::tableName() . '.user_id= u.id')
+                    ->where(['like','u.username', $this->user_id]);
+        }
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'email', $this->email])

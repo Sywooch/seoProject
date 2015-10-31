@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'email:email',
             'phone',
-            'user_id',
+            [
+                'attribute' => 'user_id',
+                'format' => 'raw',
+                'value' => function($data) {
+                    return Html::a($data->user->username, ['/user/view', 'id'=> $data->user_id]);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

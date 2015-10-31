@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Company;
-
+use \app\models\User;
 /**
  * CompanySearch represents the model behind the search form about `app\models\Company`.
  */
@@ -18,8 +18,8 @@ class CompanySearch extends Company
     public function rules()
     {
         return [
-            [['user_id'], 'integer'],
-            [['name'], 'safe'],
+//            [['user_id'], 'integer'],
+            [['name','user_id'], 'safe'],
         ];
     }
 
@@ -56,11 +56,11 @@ class CompanySearch extends Company
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if ($this->user_id !='') {
+            $query->leftJoin(User::tableName() . ' u', Company::tableName() . '.user_id= u.id')
+                    ->where(['like','u.username', $this->user_id]);
+        }
         // grid filtering conditions
-        $query->andFilterWhere([
-            'user_id' => $this->user_id,
-        ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 

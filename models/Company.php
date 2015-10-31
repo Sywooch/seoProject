@@ -40,7 +40,7 @@ class Company extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('app', 'User ID'),
+            'user_id' => Yii::t('app', 'User'),
             'name' => Yii::t('app', 'Name'),
         ];
     }
