@@ -9,8 +9,11 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\SignupForm;
+use \app\models\Page;
+use \yii\web\NotFoundHttpException;
 class SiteController extends MyControler
 {
+
     public function behaviors()
     {
         return [
@@ -64,7 +67,7 @@ class SiteController extends MyControler
         }
         $this->addGoalForForm('login-form', 'login');
         return $this->render('login', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -84,7 +87,7 @@ class SiteController extends MyControler
         }
         $this->addGoalForForm('contact-form', 'feedback');
         return $this->render('contact', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -92,7 +95,7 @@ class SiteController extends MyControler
     {
         return $this->render('about');
     }
-    
+
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -105,7 +108,24 @@ class SiteController extends MyControler
         }
         $this->addGoalForForm('form-signup', 'registration');
         return $this->render('signup', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
+
+    public function actionPage()
+    {
+        $url = Yii::$app->request->get('url', false);
+        if ($url !== false) {
+            $page = Page::find()->where('url = :url', [':url' => $url])->one();
+            if (!is_null($page)) {
+                $view = $this->view;
+                $view->title = $page->title;
+                $view->registerMetaTag(['name' => 'description', 'content' => $page->meta_description]);
+                $view->registerMetaTag(['name' => 'keywords', 'content' => $page->meta_keyword]);
+                return $this->render('page', ['content' => $page->content]);
+            } 
+        } 
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'rosvuz.inform@yandex.ru',
     'yandexCounter' => '33022724',
 ];

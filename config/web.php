@@ -23,10 +23,21 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.yandex.ru',
+                'username' => 'rosvuz.inform',
+                'password' => 'HjcDep2014',
+                'port' => '465',
+                'encryption' => 'SSL',
+                'plugins' => [
+                    [
+                        'class' => 'Swift_Plugins_LoggerPlugin',
+                        'constructArgs' => [new Swift_Plugins_Loggers_ArrayLogger],
+                    ],
+                ],
+            ],
         ],
         'urlManager' => array(
             'enablePrettyUrl' => true,
@@ -34,15 +45,14 @@ $config = [
             'enableStrictParsing' => false,
             'rules' => array(
                 '' => '/site/index',
-                '<action:\w+>'=>'/site/<action>',
+                '<action:\w+>' => '/site/<action>',
+                '/page/<url:[a-z0-9]+>' => '/site/page',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                 '<module:[\wd-]+>/<controller:[\wd-]+>/<action:[\wd-]+>/<id:\d+>' => '<module>/<controller>/<action>',
-                
             ),
         ),
-        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -51,6 +61,16 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'dd-MM-Y',
+            'datetimeFormat' => 'dd-MM-Y H:i',
+            'timeFormat' => 'H:i:s',
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'defaultRoles' => ['guest'],
         ],
         'db' => require(__DIR__ . '/db.php'),
     ],
