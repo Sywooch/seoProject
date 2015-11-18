@@ -10,7 +10,9 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\SignupForm;
 use \app\models\Page;
+use app\models\User;
 use \yii\web\NotFoundHttpException;
+
 class SiteController extends MyControler
 {
 
@@ -33,6 +35,11 @@ class SiteController extends MyControler
                 'actions' => [
                     'logout' => ['post'],
                 ],
+            ],
+            'eauth' => [
+                // required to disable csrf validation on OpenID requests
+                'class' => \nodge\eauth\openid\ControllerBehavior::className(),
+                'only' => ['login'],
             ],
         ];
     }
@@ -57,6 +64,37 @@ class SiteController extends MyControler
 
     public function actionLogin()
     {
+        $serviceName = Yii::$app->getRequest()->getQueryParam('service');
+        if (isset($serviceName)) {
+            /** @var $eauth \nodge\eauth\ServiceBase */
+            $eauth = Yii::$app->get('eauth')->getIdentity($serviceName);
+            $eauth->setRedirectUrl(Yii::$app->getUser()->getReturnUrl());
+            $eauth->setCancelUrl(Yii::$app->getUrlManager()->createAbsoluteUrl('site/login'));
+
+            try {
+                if ($eauth->authenticate()) {
+//                  var_dump($eauth->getIsAuthenticated(), $eauth->getAttributes()); exit;
+
+                    $identity = User::findByEAuth($eauth);
+                    Yii::$app->getUser()->login($identity);
+
+                    // special redirect with closing popup window
+                    $eauth->redirect();
+                }
+                else {
+                    // close popup window and redirect to cancelUrl
+                    $eauth->cancel();
+                }
+            }
+            catch (\nodge\eauth\ErrorException $e) {
+                // save error to show it later
+                Yii::$app->getSession()->setFlash('error', 'EAuthException: '.$e->getMessage());
+
+                // close popup window and redirect to cancelUrl
+//              $eauth->cancel();
+                $eauth->redirect($eauth->getCancelUrl());
+            }
+        }
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -123,8 +161,8 @@ class SiteController extends MyControler
                 $view->registerMetaTag(['name' => 'description', 'content' => $page->meta_description]);
                 $view->registerMetaTag(['name' => 'keywords', 'content' => $page->meta_keyword]);
                 return $this->render('page', ['content' => $page->content]);
-            } 
-        } 
+            }
+        }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 

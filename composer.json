@@ -19,7 +19,9 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "zelenin/yii2-summernote-widget": "dev-master",
-        "udokmeci/yii2-phone-validator" : "dev-master"
+        "udokmeci/yii2-phone-validator" : "dev-master",
+        "yiisoft/yii2-authclient": "^2.0@dev",
+         "nodge/yii2-eauth": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
