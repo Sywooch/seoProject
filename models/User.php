@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
+use app\modules\social\models\SocialToken;
 /**
  * User model
  *
@@ -207,7 +207,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (!$service->getIsAuthenticated()) {
             throw new ErrorException('EAuth user should be authenticated before creating identity.');
         }
-
+        
         $id = $service->getServiceName() . '-' . $service->getId();
         $attributes = [
             'id' => $id,
@@ -217,7 +217,35 @@ class User extends ActiveRecord implements IdentityInterface
         ];
         $attributes['profile']['service'] = $service->getServiceName();
         Yii::$app->getSession()->set('user-' . $id, $attributes);
-        return new self($attributes);
+        $token = SocialToken::findByService($service);
+        if (is_null($token)) {
+            return self::createFromService($service);
+        } else {
+            return $token->user;
+        }
+    }
+    
+    /**
+     * Create user from EAuth
+     * 
+     * @param \nodge\eauth\oauth\ServiceBase $service
+     * 
+     * @return \self
+     */
+    public static function createFromService($service)
+    {
+        $username = $service->getAttribute('name');
+        $model = new self();
+        $model->generateAuthKey();
+        $model->generatePasswordResetToken();
+        $model->setPassword(md5($username));
+        $model->username = $username;
+        if ($model->save()) {
+            SocialToken::createToken($service, $model->id);
+            return $model;
+        } else {
+            return null;
+        }
     }
 
 }

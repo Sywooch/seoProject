@@ -12,6 +12,7 @@ use app\models\SignupForm;
 use \app\models\Page;
 use app\models\User;
 use \yii\web\NotFoundHttpException;
+use app\modules\social\models\SocialToken;
 
 class SiteController extends MyControler
 {
@@ -74,39 +75,37 @@ class SiteController extends MyControler
             try {
                 if ($eauth->authenticate()) {
 //                  var_dump($eauth->getIsAuthenticated(), $eauth->getAttributes()); exit;
-
+                    
                     $identity = User::findByEAuth($eauth);
                     Yii::$app->getUser()->login($identity);
-
                     // special redirect with closing popup window
                     $eauth->redirect();
-                }
-                else {
+                } else {
                     // close popup window and redirect to cancelUrl
                     $eauth->cancel();
                 }
-            }
-            catch (\nodge\eauth\ErrorException $e) {
+            } catch (\nodge\eauth\ErrorException $e) {
                 // save error to show it later
-                Yii::$app->getSession()->setFlash('error', 'EAuthException: '.$e->getMessage());
+                Yii::$app->getSession()->setFlash('error', 'EAuthException: ' . $e->getMessage());
 
                 // close popup window and redirect to cancelUrl
 //              $eauth->cancel();
                 $eauth->redirect($eauth->getCancelUrl());
             }
-        }
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        } else {
+            if (!\Yii::$app->user->isGuest) {
+                return $this->render('login/social');
+            }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $model = new LoginForm();
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+                return $this->goBack();
+            }
+            $this->addGoalForForm('login-form', 'login');
+            return $this->render('login/login', [
+                        'model' => $model,
+            ]);
         }
-        $this->addGoalForForm('login-form', 'login');
-        return $this->render('login', [
-                    'model' => $model,
-        ]);
     }
 
     public function actionLogout()

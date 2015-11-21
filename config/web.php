@@ -7,6 +7,27 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'captcha' => [
+            'class' => 'jumper423\Captcha',
+            'pathTmp' => '@imagescache/captcha',
+            'apiKey' => '42eab4119020dbc729f657',
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'vkontakte' => [
+                    'class' => 'jumper423\VK',
+                    'clientId' => '5129413',
+                    'clientSecret' => 'XZPCpX2GgjlTb8ShaBC3',
+                    'delay' => 0.7,
+                    'delayExecute' => 120,
+                    'limitExecute' => 1,
+                    'captcha' => 'captcha',
+                    'scope' => 'friends,photos,pages,wall,groups,email,stats,ads,offline,notifications', //,messages,nohttps
+                    'title' => 'ВКонтакте'
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dsadfsdfasdfasdfsadf',
@@ -178,6 +199,9 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
     ],
     'modules' => [
+        'social' => [
+            'class' => 'app\modules\social\Module',
+        ],
         'yandexseo' => [
             'class' => 'app\modules\yandexseo\Module',
         ],
@@ -206,14 +230,14 @@ if (YII_ENV_DEV) {
     ];
 }
 
-if (file_exists(__DIR__.'/web-local.php')) {
-	$localConfig = require 'web-local.php';
-	$config = \yii\helpers\ArrayHelper::merge($config, $localConfig);
+if (file_exists(__DIR__ . '/web-local.php')) {
+    $localConfig = require 'web-local.php';
+    $config = \yii\helpers\ArrayHelper::merge($config, $localConfig);
 }
 $eauthServices = array_keys($config['components']['eauth']['services']);
 array_unshift($config['components']['urlManager']['rules'], array(
-	'route' => 'site/sociallogin',
-	'pattern' => 'login/<service:('.implode('|', $eauthServices).')>',
+    'route' => 'site/sociallogin',
+    'pattern' => 'login/<service:(' . implode('|', $eauthServices) . ')>',
 ));
 
 return $config;

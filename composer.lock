@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d73d11171bcf952889939e82a39d4a2d",
-    "content-hash": "939d271a5422e9328909c2577228fcd9",
+    "hash": "7c1c43d71ca345dca9c32f4e528c5373",
+    "content-hash": "68767f368c51bd6190127371c19290bd",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -480,6 +480,95 @@
                 "validation"
             ],
             "time": "2015-11-12 14:17:02"
+        },
+        {
+            "name": "jumper423/yii2-captcha",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jumper423/yii2-captcha.git",
+                "reference": "f378264ed3f84890c01b4be4c3eafdb1c70ab12e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jumper423/yii2-captcha/zipball/f378264ed3f84890c01b4be4c3eafdb1c70ab12e",
+                "reference": "f378264ed3f84890c01b4be4c3eafdb1c70ab12e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "jumper423\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License 2.0"
+            ],
+            "description": "Распознавание капч для всех популярных сервисов rucaptcha.com, 2captcha.com, pixodrom.com, captcha24.com, socialink.ru, anti-captcha.com",
+            "homepage": "http://infoblog1.ru/learn/cms/yii/raspoznavanie-kapch-na-yii2",
+            "keywords": [
+                "2captcha",
+                "2captcha.com",
+                "anti-captcha",
+                "anti-captcha.com",
+                "captcha",
+                "captcha24",
+                "captcha24.com",
+                "pixodrom",
+                "pixodrom.com",
+                "recognition",
+                "rucaptcha",
+                "rucaptcha.com",
+                "socialink",
+                "socialink.ru",
+                "yii2"
+            ],
+            "time": "2015-10-15 19:56:58"
+        },
+        {
+            "name": "jumper423/yii2-vk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jumper423/yii2-vk.git",
+                "reference": "11e1053d53894ec3559082d77231434f58004a81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jumper423/yii2-vk/zipball/11e1053d53894ec3559082d77231434f58004a81",
+                "reference": "11e1053d53894ec3559082d77231434f58004a81",
+                "shasum": ""
+            },
+            "require": {
+                "jumper423/yii2-captcha": "*",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-authclient": "~2.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "jumper423\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License 2.0"
+            ],
+            "keywords": [
+                "api",
+                "vk",
+                "vkontakte",
+                "yii2",
+                "апи",
+                "вконтакте"
+            ],
+            "time": "2015-10-25 00:24:37"
         },
         {
             "name": "lusitanian/oauth",

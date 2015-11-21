@@ -4,7 +4,6 @@
 /* @var $model app\models\LoginForm */
 
 use yii\helpers\Html;
-use \yii\bootstrap\Tabs;
 use yii\bootstrap\ActiveForm;
 ?>
 
