@@ -12,4 +12,9 @@ class DefaultController extends Controller
         $this->view->title = 'My Angular Yii Application';
         return $this->render('index');
     }
+    
+    public function actionImage()
+    {
+        return $this->render('image');
+    }
 }
