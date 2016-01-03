@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\angularjs\assets;
+namespace app\modules\image\assets;
 
 use yii\web\AssetBundle;
 use yii\web\View;

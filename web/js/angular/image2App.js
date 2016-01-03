@@ -111,16 +111,24 @@ app.factory('canvasDrawer', function () {
 });
 app.controller('Image2Ctrl', ['$scope', '$http', 'canvasDrawer',
     function ($scope, $http, canvasDrawer) {
-        $scope.areas = [[{x: 110, y: 71}, {x: 210, y: 71}, {x: 210, y: 151}, {x: 110, y: 151}]];//areas array
-        $scope.buttonTitle = 'Add area';
+        $scope.areas = [{
+            title: 'test',
+            points: [
+                {x: 110, y: 71}, 
+                {x: 210, y: 71}, 
+                {x: 210, y: 151}, 
+                {x: 110, y: 151}
+            ]
+        }];
         $scope.active = false;
         $scope.getCoordinats = function (area) {
             var result = '';
-            for (var i = 0; i < area.length; i++) {
+            var points = area.points;
+            for (var i = 0; i < points.length; i++) {
                 if (i > 0) {
                     result += ',';
                 }
-                result += area[i].x + ',' + area[i].y;
+                result += points[i].x + ',' + points[i].y;
             }
             return result;
         };
@@ -136,7 +144,9 @@ app.controller('Image2Ctrl', ['$scope', '$http', 'canvasDrawer',
         };
         $scope.saveBtn = function () {
             $scope.active = !$scope.active;
-            $scope.areas.push($scope.points);
+            var tmp = {title: $scope.title};
+            tmp['points'] = $scope.points;
+            $scope.areas.push(tmp);
             $scope.points = [];
             canvasDrawer.clearCanvas();
         };

@@ -7,7 +7,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use app\modules\angularjs\assets\AngularAsset;
+use app\modules\image\assets\AngularAsset;
 
 AppAsset::register($this);
 AngularAsset::register($this);

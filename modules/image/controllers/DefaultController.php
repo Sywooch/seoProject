@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\angularjs\controllers;
+namespace app\modules\image\controllers;
 
 use yii\web\Controller;
 

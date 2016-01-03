@@ -3,7 +3,7 @@ use \yii\bootstrap\Html;
 use \xj\imgareaselect\ImgAreaSelect;
 use \xj\imgareaselect\ImgareaselectAsset;
 use \yii\web\View;
-use app\modules\angularjs\assets\ImageAsset;
+use app\modules\image\assets\ImageAsset;
 //TestAssets::register($this);
 ImageAsset::register($this);
 $id = '';

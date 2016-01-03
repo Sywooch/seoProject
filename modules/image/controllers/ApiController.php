@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace app\modules\angularjs\controllers;
+namespace app\modules\image\controllers;
 
 
 use Yii;

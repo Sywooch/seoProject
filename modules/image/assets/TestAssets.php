@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\angularjs\assets;
+namespace app\modules\image\assets;
 
 use yii\web\AssetBundle;
 use yii\web\View;
@@ -19,6 +19,6 @@ class TestAssets extends AssetBundle
         'position' => View::POS_END,
     ];
     public $depends = [
-        'app\modules\angularjs\assets\AngularAsset',
+        'app\modules\image\assets\AngularAsset',
     ];
 }

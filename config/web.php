@@ -3,6 +3,8 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+    'language' => 'ru-RU',
+    'sourceLanguage' => 'ru-RU',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -191,13 +193,17 @@ $config = [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@eauth/messages',
                 ],
+                'image' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/image/messages',
+                ],
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
     ],
     'modules' => [
         'angularjs' => [
-            'class' => 'app\modules\angularjs\Module',
+            'class' => 'app\modules\image\Module',
         ],
         'social' => [
             'class' => 'app\modules\social\Module',

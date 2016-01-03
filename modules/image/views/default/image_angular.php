@@ -3,8 +3,8 @@
 use \yii\bootstrap\Html;
 use \xj\imgareaselect\ImgAreaSelect;
 use \xj\imgareaselect\ImgareaselectAsset;
-use \app\modules\angularjs\assets\TestAssets;
-use app\modules\angularjs\assets\ImageAsset;
+use \app\modules\image\assets\TestAssets;
+use app\modules\image\assets\ImageAsset;
 ImgareaselectAsset::registerWithStyle($this, ImgareaselectAsset::STYLE_ANIMATED);
 ImageAsset::register($this);
 $id = '';
