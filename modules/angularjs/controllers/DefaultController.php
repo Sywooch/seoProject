@@ -15,6 +15,18 @@ class DefaultController extends Controller
     
     public function actionImage()
     {
+        $this->layout = 'simple';
         return $this->render('image');
+    }
+    
+    public function actionImage2()
+    {
+        $this->layout = 'simple';
+        return $this->render('image_angular');
+    }
+    public function actionImage3()
+    {
+        $this->layout = 'simple';
+        return $this->render('image2');
     }
 }

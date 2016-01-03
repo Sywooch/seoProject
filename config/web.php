@@ -12,25 +12,22 @@ $config = [
             'pathTmp' => '@imagescache/captcha',
             'apiKey' => '42eab4119020dbc729f657',
         ],
-        'authClientCollection' => [
-            'class' => 'yii\authclient\Collection',
-            'clients' => [
-                'vkontakte' => [
-                    'class' => 'jumper423\VK',
-                    'clientId' => '5129413',
-                    'clientSecret' => 'XZPCpX2GgjlTb8ShaBC3',
-                    'delay' => 0.7,
-                    'delayExecute' => 120,
-                    'limitExecute' => 1,
-                    'captcha' => 'captcha',
-                    'scope' => 'friends,photos,pages,wall,groups,email,stats,ads,offline,notifications', //,messages,nohttps
-                    'title' => 'ВКонтакте'
-                ],
-            ],
+        'vk' => [
+            'class' => 'jumper423\VK',
+            'clientId' => '5129413',
+            'clientSecret' => 'XZPCpX2GgjlTb8ShaBC3',
+            'delay' => 0.7, // Минимальная задержка между запросами
+            'delayExecute' => 120, // Задержка между группами инструкций в очереди
+            'limitExecute' => 1, // Количество инструкций на одно выполнении в очереди
+            'captcha' => 'captcha', // Компонент по распознованию капчи
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'dsadfsdfasdfasdfsadf',
+        //    'cookieValidationKey' => 'dsadfsdfasdfasdfsadf',
+            'enableCookieValidation' => false,
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -167,7 +164,7 @@ $config = [
 //                ],
                 'vkontakte' => [
                     // register your app here: https://vk.com/editapp?act=create&site=1
-                    'class' => 'nodge\eauth\services\VKontakteOAuth2Service',
+                    'class' => 'app\modules\social\models\service\VkontakteService',
                     'clientId' => '5129413',
                     'clientSecret' => 'XZPCpX2GgjlTb8ShaBC3',
                 ],
@@ -199,6 +196,9 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
     ],
     'modules' => [
+        'angularjs' => [
+            'class' => 'app\modules\angularjs\Module',
+        ],
         'social' => [
             'class' => 'app\modules\social\Module',
         ],
