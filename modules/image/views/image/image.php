@@ -1,16 +1,38 @@
 <?php
 
 use \yii\bootstrap\Html;
-use app\modules\image\assets\ImageAsset2;
+use app\modules\image\assets\ImageAsset;
 
-ImageAsset2::register($this);
+\app\modules\image\assets\AngularAsset::register($this);
+ImageAsset::register($this);
 $id = $model->id;
+if (!$model->isNewRecord) {
+    $image = $model->getImage();
+    if ($image) {
+        $url = $image->getUrl();
+    }
+}
 ?>
-<div ng-controller="Image2Ctrl">
+<script type="text/javascript" >
+    'use strict';
+    var app = angular.module('app', [
+        'ngRoute', //$routeProvider
+        'mgcrea.ngStrap' //bs-navbar, data-match-route directives,
+    ]);
+    app.value('imageModel', {
+        <?php if (!$model->isNewRecord):?>
+        name: "<?=$model->name?>",
+        id: "<?=$model->getPrimaryKey()?>",
+        file: "<?=$url?>"
+        <?php endif;?>
+        
+    });
+</script>
+<div ng-controller="ImageCtrl">
     <div class="preview" id="preview">
-        <div class="inner" id="draw" ng-mousedown="addPoint($event )" style="width: 100%">
+        <div class="inner" id="draw" ng-mousedown="addPoint($event)" style="width: 100%">
             <canvas id="myimage_canvas"></canvas>
-            <img id ="myimage" usemap="#imgmap<?=$id?>" class="mapper"  src="{{file}}" style="max-width: 100%" >
+            <img id ="myimage" usemap="#imgmap<?= $id ?>" class="mapper"  src="{{file}}" style="max-width: 100%" >
         </div>
     </div>
     <map name="imgmap<?= $id ?>">
@@ -26,31 +48,41 @@ $id = $model->id;
             <?= Html::activeLabel($model, 'name') ?>:
             <?= Html::activeTextInput($model, 'name', ['ng-model' => 'name']) ?>
             <?= Html::activeHiddenInput($model, 'id', ['ng-model' => 'id']) ?>
-            <?=  Html::button(\Yii::t('image', 'Save image'), [
+            <?=
+            Html::button(\Yii::t('image', 'Save image'), [
                 'ng-click' => 'saveImage()',
                 'class' => 'btn btn-primary'
-                ])?>
+            ])
+            ?>
         </div>
         <div class="row" ng-show="showBar">
-            <?=  Html::button(\Yii::t('image', 'Clear all'), [
+            <?=
+            Html::button(\Yii::t('image', 'Clear all'), [
                 'ng-click' => 'clear()',
                 'class' => 'btn btn-primary'
-                ])?>
-            <?=  Html::button(\Yii::t('image', 'Add area'), [
+            ])
+            ?>
+            <?=
+            Html::button(\Yii::t('image', 'Add area'), [
                 'ng-click' => 'addBtn()',
                 'class' => 'btn btn-primary',
                 'ng-hide' => 'active'
-                ])?>
-            <?=  Html::button(\Yii::t('image', 'Save area'), [
+            ])
+            ?>
+            <?=
+            Html::button(\Yii::t('image', 'Save area'), [
                 'ng-click' => 'saveBtn()',
                 'class' => 'btn btn-primary',
                 'ng-show' => 'active'
-                ])?>
-            <?=  Html::textInput('', '', [
+            ])
+            ?>
+            <?=
+            Html::textInput('', '', [
                 'ng-model' => 'title',
                 'placeholder' => \Yii::t('image', 'Title'),
                 'ng-show' => 'active'
-            ])?>
+            ])
+            ?>
         </div>
 
     </div>

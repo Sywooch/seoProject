@@ -41,26 +41,32 @@ AngularAsset::register($this);
                         <a class="navbar-brand" href="#/">My Company</a>
                     </div>
                     <div ng-class="!navCollapsed && 'in'" ng-click="navCollapsed = true" class="collapse navbar-collapse" >
-                        <ul class="navbar-nav navbar-right nav">
-                            <li data-match-route="/$">
-                                <a href="#/">Home</a>
-                            </li>
-                            <li data-match-route="/about">
-                                <a href="#/about">About</a>
-                            </li>
-                            <li data-match-route="/contact">
-                                <a href="#/contact">Contact</a>
-                            </li>
-                            <li data-match-route="/dashboard" ng-show="loggedIn()" class="ng-hide">
-                                <a href="#/dashboard">Dashboard</a>
-                            </li>
-                            <li ng-class="{active:isActive('/logout')}" ng-show="loggedIn()" ng-click="logout()"  class="ng-hide">
-                                <a href="">Logout</a>
-                            </li>
-                            <li data-match-route="/login" ng-hide="loggedIn()">
-                                <a href="#/login">Login</a>
-                            </li>
-                        </ul>
+                        <?php
+                        NavBar::begin([
+                            'brandLabel' => 'Seo Project',
+                            'brandUrl' => Yii::$app->homeUrl,
+                            'options' => [
+                                'class' => 'navbar-inverse navbar-fixed-top',
+                            ],
+                        ]);
+                        echo Nav::widget([
+                            'options' => ['class' => 'navbar-nav navbar-right'],
+                            'items' => [
+                                ['label' => 'Home', 'url' => ['/site/index']],
+                                ['label' => 'About', 'url' => ['/site/about']],
+                                ['label' => 'Contact', 'url' => ['/site/contact']],
+                                ['label' => 'Registration', 'url' => ['/site/signup'], 'visible' => Yii::$app->user->isGuest],
+                                Yii::$app->user->isGuest ?
+                                        ['label' => 'Login', 'url' => ['/site/login']] :
+                                        [
+                                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+                                    'url' => ['/site/logout'],
+                                    'linkOptions' => ['data-method' => 'post']
+                                        ],
+                            ],
+                        ]);
+                        NavBar::end();
+                        ?>
                     </div>
                 </div>
             </nav>

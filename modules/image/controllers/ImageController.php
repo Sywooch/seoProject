@@ -146,7 +146,7 @@ class ImageController extends Controller
         if (is_null($id)) {
             $model = new ImageItem();
         } else {
-            $model = ImageItem::find($id)->one();
+            $model = ImageItem::findOne($id);
         }
         return $this->render('image', compact('model'));
     }

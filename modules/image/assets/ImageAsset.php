@@ -14,9 +14,12 @@ class ImageAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $js = [
-        'js/angular/ng-imgAreaSelect.js',
-        'js/angular/mapper.js',
-        'js/angular/imageApp.js',
+        'js/image/canvasDrawer.js',
+        'js/image/serverside.js',
+        'js/image/imageCtrl.js',
+    ];
+    public $css = [
+        'css/image.css'
     ];
     public $jsOptions = [
         'position' => View::POS_END,

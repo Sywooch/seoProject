@@ -56,14 +56,19 @@ class ApiImageController extends Controller
      */
     public function actionLoad($id)
     {
-        $model = ImageItem::find($id)->with('areas');
+        $model = ImageItem::findOne($id);
         $image = $model->getImage();
-        $areas = $model->areas;
+        $areas = Area::find()->where(['item_id'=> $id])->all();
         $areasResponse = [];
         foreach ($areas as $area) {
+            $areaPoints = $area->area[0];
+            $points = [];
+            foreach ($areaPoints as $point) {
+                $points[] = ['x' => $point[0], 'y' => $point[1]];
+            }
             $areasResponse[] = [
                 'title' => $area->title,
-                'points' => $area->area[0]
+                'points' => $points
             ];
         }
         $response = [
@@ -99,7 +104,7 @@ class ApiImageController extends Controller
         $file = $request->get('file');
         $id = $request->get('id', false);
         if ($id) {
-            $model = ImageItem::find($id);
+            $model = ImageItem::findOne($id);
         } else {
             $model = new ImageItem();
         }

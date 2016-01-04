@@ -6,6 +6,7 @@ use Yii;
 use app\models\User;
 use yii\behaviors\TimestampBehavior;
 use yii\web\UploadedFile;
+use app\modules\image\models\Area;
 /**
  * This is the model class for table "{{%image_item}}".
  *
@@ -66,7 +67,7 @@ class ImageItem extends \yii\db\ActiveRecord
      */
     public function getAreas()
     {
-        return $this->hasMany(Areas::className(), ['item_id' => 'id']);
+        return $this->hasMany(Area::className(), ['item_id' => 'id']);
     }
 
     /**
