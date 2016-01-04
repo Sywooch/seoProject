@@ -14,8 +14,10 @@ class ImageAsset2 extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $js = [
-        'js/angular/mapper.js',
+//        'js/angular/mapper.js',
         'js/angular/image2App.js',
+//        'js/angular/jquery.maphilight.js',
+//        'js/angular/angular-maphilights.js',
     ];
     public $css = [
         'css/image.css'

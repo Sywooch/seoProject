@@ -3,6 +3,96 @@ var app = angular.module('app', [
     'ngRoute', //$routeProvider
     'mgcrea.ngStrap' //bs-navbar, data-match-route directives,
 ]);
+app.factory('serversite', function ($http) {
+    var serversite = {
+        /**
+         * upload Image
+         * @param {type} file
+         * @returns {undefined}
+         */
+        uploadImage: function (files, success, error) {
+            var uploadUrl = '/image/api-image/upload';
+
+            var fd = new FormData();
+            //Take the first selected file
+            fd.append("file", files[0]);
+
+            var promise = $http.post(uploadUrl, fd, {
+                withCredentials: true,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+            })
+            if (success)
+                promise.success(success);
+            if (error)
+                promise.error(error);
+        },
+        /**
+         * Load all information about image
+         * 
+         * @param integer id
+         * @param function success
+         * @param function error
+         * 
+         * @returns {undefined}
+         */
+        loadImage: function (id, success, error) {
+            if (!angular.isUndefined(id) && id != null) {
+                var response = $http.get('/image/api-image/load', {
+                    params: {id: id}
+                });
+                if (success)
+                    response.success(success);
+                if (error)
+                    response.error(error);
+            }
+        },
+        /**
+         * Save information about image 
+         * 
+         * @param integer id
+         * @param string name
+         * @param string file
+         * @param function success
+         * @param function error
+         */
+        saveImage: function (id, name, file, success, error) {
+            var params = {name: name, file: file};
+            if (!angular.isUndefined(id) && id != null && id != '') {
+                params['id'] = id;
+            }
+            var response = $http.get('/image/api-image/save', {
+                params: params
+            });
+            if (success)
+                response.success(success);
+            if (error)
+                response.error(error);
+        },
+        /**
+         * Save polygon 
+         * 
+         * @param integer id
+         * @param points[] area
+         * @param function success
+         * @param function error
+         */
+        saveArea: function (id, area, title, success, error) {
+            var params = {area: JSON.stringify(area), title: title};
+            if (!angular.isUndefined(id) && id != null && id != '') {
+                params['id'] = id;
+            }
+            var response = $http.get('/image/api-image/add-area', {
+                params: params //
+            });
+            if (success)
+                response.success(success);
+            if (error)
+                response.error(error);
+        }
+    };
+    return serversite;
+});
 app.factory('canvasDrawer', function () {
     var registry = {};
 
@@ -11,6 +101,7 @@ app.factory('canvasDrawer', function () {
          * draw the square on the canvas
          */
         draw: function (height, width) {
+            this.showCanvas();
             console.log("square to draw: " + height + "x" + width);
 
             var canvas = document.getElementById("myimage_canvas");
@@ -24,14 +115,26 @@ app.factory('canvasDrawer', function () {
             }
         },
         // draw area in canvas
-        drawArea: function (points) {
+        drawArea: function (points, over, hide) {
+            this.showCanvas();
             var canvas = document.getElementById("myimage_canvas");
             if (canvas.getContext) {
                 console.log("add point");
                 var ctx = canvas.getContext("2d");
-                ctx.fillStyle = 'rgba(0,172,239,0.2)';
+                if (over == true) {
+                    if (hide == true) {
+                        ctx.fillStyle = 'rgba(197, 200, 201, 0)';    
+                        ctx.strokeStyle = 'rgba(0,0,0, 0)';
+                    } else {
+                        ctx.fillStyle = 'rgba(197, 200, 201, 0.4)';    
+                        ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+                    }
+                    
+                } else {
+                    ctx.fillStyle = 'rgba(0,172,239,0.2)';    
+                    ctx.strokeStyle = 'rgba(0,172,239,0.8)';
+                }
                 ctx.lineWidth = 1;
-                ctx.strokeStyle = 'rgba(0,172,239,0.8)';
                 ctx.beginPath();
                 for (var i = 0, l = points.length; i < l; i++) {
                     if (i == 0) {
@@ -42,11 +145,13 @@ app.factory('canvasDrawer', function () {
                 }
                 ctx.closePath();
                 ctx.fill();
-                ctx.stroke();
-                // Draw points
-                ctx.fillStyle = 'rgba(0,139,191,0.8)';
-                for (var i = 0, l = points.length; i < l; i++) {
-                    ctx.fillRect(points[i]['x'] - 2, points[i]['y'] - 2, 4, 4);
+                ctx.stroke
+                if (over != true) {
+                    // Draw points
+                    ctx.fillStyle = 'rgba(0,139,191,0.8)';
+                    for (var i = 0, l = points.length; i < l; i++) {
+                        ctx.fillRect(points[i]['x'] - 2, points[i]['y'] - 2, 4, 4);
+                    }
                 }
             }
         },
@@ -59,7 +164,7 @@ app.factory('canvasDrawer', function () {
                 //clear the canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
-
+            this.hideCanvas();
         },
         // clear partiotion in canvas
         clearPartition: function (points) {
@@ -105,21 +210,43 @@ app.factory('canvasDrawer', function () {
             _x = elm.getBoundingClientRect().left + scrollX;
             _y = elm.getBoundingClientRect().top + scrollY;
             return {left: _x, top: _y};
+        },
+        /**
+         * Hide canvas
+         * @returns {undefined}
+         */
+        hideCanvas : function () {
+            var canvas = document.getElementById("myimage_canvas");
+            canvas.style.display = 'none';
+        }, 
+        /**
+         * Show canvas
+         * @returns {undefined}
+         */
+        showCanvas : function () {
+            var canvas = document.getElementById("myimage_canvas");
+            var image = document.getElementById('myimage');
+            canvas.style.display = 'block';
+            canvas.style.width = image.style.width;
+            canvas.style.height = image.style.height;
         }
     };
     return canvasDrawer;
 });
-app.controller('Image2Ctrl', ['$scope', '$http', 'canvasDrawer',
-    function ($scope, $http, canvasDrawer) {
+app.controller('Image2Ctrl', ['$scope', '$http', 'canvasDrawer', 'serversite',
+    function ($scope, $http, canvasDrawer, serversite) {
+        $scope.showBar = false;
+        $scope.file = '';
+        canvasDrawer.hideCanvas();
         $scope.areas = [{
-            title: 'test',
-            points: [
-                {x: 110, y: 71}, 
-                {x: 210, y: 71}, 
-                {x: 210, y: 151}, 
-                {x: 110, y: 151}
-            ]
-        }];
+                title: 'test',
+                points: [
+                    {x: 110, y: 71},
+                    {x: 210, y: 71},
+                    {x: 210, y: 151},
+                    {x: 110, y: 151}
+                ]
+            }];
         $scope.active = false;
         $scope.getCoordinats = function (area) {
             var result = '';
@@ -142,13 +269,18 @@ app.controller('Image2Ctrl', ['$scope', '$http', 'canvasDrawer',
         $scope.addBtn = function () {
             $scope.active = !$scope.active;
         };
+        // button save area
         $scope.saveBtn = function () {
             $scope.active = !$scope.active;
             var tmp = {title: $scope.title};
             tmp['points'] = $scope.points;
             $scope.areas.push(tmp);
-            $scope.points = [];
-            canvasDrawer.clearCanvas();
+            serversite.saveArea($scope.id, $scope.points, $scope.title, function (response) {
+                if (response.success) {
+                    $scope.points = [];
+                    canvasDrawer.clearCanvas();
+                }
+            });
         };
         // add point 
         $scope.addPoint = function ($event) {
@@ -170,6 +302,38 @@ app.controller('Image2Ctrl', ['$scope', '$http', 'canvasDrawer',
                 return false;
             }
         };
+        // upload Image
+        $scope.uploadFile = function (file) {
+            serversite.uploadImage(file, function (response) {
+                $scope.file = response.file;
+            });
+        }
         //   canvasDrawer.clearCanvas();
+        // load all information about image
+        if (!angular.isUndefined($scope.id) && $scope.id != '' && $scope.id != null) {
+            serversite.loadImage($scope.id, function (response) {
+                $scope.image = response.image;
+                $scope.areas = response.areas;
+                $scope.showBar = true;
+            });
+        }
+        // save image information
+        $scope.saveImage = function () {
+            serversite.saveImage($scope.id, $scope.name, $scope.file, function (response) {
+                if (response.success) {
+                    $scope.id = response.id;
+                    $scope.name = response.name;
+                    $scope.showBar = true;
+                }
+            })
+        };
+        // mouse leave area
+        $scope.mouseleave = function (area) {
+            canvasDrawer.clearCanvas();
+        };
+        // mouse over area
+        $scope.mouseover = function (area) {
+            canvasDrawer.drawArea(area.points, true);
+        };
     }
 ]);
