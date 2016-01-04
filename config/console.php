@@ -27,5 +27,17 @@ return [
         ],
         'db' => $db,
     ],
+    'controllerMap' => [
+        'migrate' => [
+            'class' => 'app\commands\MigrateController',
+            'migrationLookup' => [
+                '@app/migrations',
+                '@app/modules/image/migrations',
+//                '@yii/rbac/migrations',
+                '@vendor/costa-rico/yii2-images/migrations',
+            // add other migration path here
+            ]
+        ]
+    ],
     'params' => $params,
 ];

@@ -26,7 +26,9 @@
         "bower-asset/angular": "*",
         "bower-asset/angular-route": "*",
         "bower-asset/angular-strap": "*",
-         "xj/yii2-imgareaselect-widget": "*"
+         "xj/yii2-imgareaselect-widget": "*",
+         "costa-rico/yii2-images": "dev-master",
+         "nanson/yii2-postgis": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
