@@ -22,7 +22,6 @@ class m160103_094023_base_image extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string(128),
             'item_id' => $this->integer(),
-//            'area' => 'GEOMETRY(POLYGON, 4326),'
         ]);
         $sql = "SELECT AddGeometryColumn( 'areas', 'area', 4326, 'POLYGON', 2);";
         $this->execute($sql);
