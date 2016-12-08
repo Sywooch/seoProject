@@ -10,7 +10,7 @@ class m161203_103046_oilPrice extends Migration
         $this->createTable('{{%oil_price}}', 
             [
                 'id' => $this->primaryKey(),
-                'tradedate' => $this->date(),
+                'trade_date' => $this->date(),
                 'code' => $this->string(4),
                 'close_price' => $this->float(),
                 'open_price' => $this->float(),
