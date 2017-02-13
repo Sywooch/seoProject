@@ -13,15 +13,17 @@ use yii\helpers\Json;
 class AvitoPhoneController extends Controller
 {
     private $cookies = '';
+    private $lastUrl;
 
     public function actionGetPhone($url = null)
     {
         //initialise cookies
         $this->getUrl('http://www.avito.ru');
         if (empty($url)) {
-            $url = 'https://www.avito.ru/nizhniy_novgorod/avtomobili/peugeot_3008_2012_901170466';
+            $url = 'https://www.avito.ru/nizhniy_novgorod/avtomobili/volkswagen_golf_2010_899761616';
         }
         $html = $this->getUrl($url);
+        //echo $html;exit;
         //get avito id from url
         preg_match('/_(\d+)$/i', $url, $match);
         $id = $match[1];
@@ -49,7 +51,10 @@ class AvitoPhoneController extends Controller
      * @param bool $header
      * @return mixed|string
      */
-    private  function getUrl($url, $header = true){
+    private  function getUrl($url, $header = true, $forPhone = false)
+    {
+        $cookiePath = $path = Yii::getAlias('@runtime/cookies/avito.txt');
+        var_dump($cookiePath);
 
         (function_exists('curl_init')) ? '' : die('cURL Must be installed for geturl function to work. Ask your host to enable it or uncomment extension=php_curl.dll in php.ini');
 
@@ -60,11 +65,33 @@ class AvitoPhoneController extends Controller
         curl_setopt($ch, CURLOPT_HEADER, $header);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_COOKIE,$this->cookies);
-        curl_setopt($ch, CURLOPT_ENCODING, "");
+        if (!empty($this->lastUrl)) {
+            curl_setopt($ch, CURLOPT_REFERER, $this->lastUrl);;
+        }
+
+        if ($forPhone) {
+            $headers = array(
+                'Host:www.avito.ru',
+                'Content-type:charset=utf-8',
+                'Connection:keep-alive'
+            );
+        } else {
+            $headers = array(
+                'Host:www.avito.ru',
+                'Content-type:charset=utf-8',
+                'Connection:keep-alive',
+                'Accept:image/webp'
+            );
+            $this->lastUrl = $url;
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        //curl_setopt($ch, CURLOPT_COOKIE, $this->cookies);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiePath);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiePath);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);    # required for https urls
         curl_setopt($ch, CURLOPT_MAXREDIRS, 15);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
         $html = curl_exec($ch);
         if (!$header) {
@@ -122,7 +149,7 @@ class AvitoPhoneController extends Controller
      * @param $saveTo
      */
     private function saveImageToFile($url, $saveTo){
-        $data = $this->getUrl($url, false);
+        $data = $this->getUrl($url, false, true);
         $jsonResult = Json::decode($data);
         $base64String = $jsonResult['image64'];
         $ifp = fopen($saveTo, "wb");
